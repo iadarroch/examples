@@ -63,13 +63,9 @@ namespace GraphQL.GraphiQL.Controllers
 
             }).ConfigureAwait(false);
 
-            var httpResult = result.Errors?.Count > 0
-                ? HttpStatusCode.BadRequest
-                : HttpStatusCode.OK;
-
             var json = _writer.Write(result);
 
-            var response = request.CreateResponse(httpResult);
+            var response = request.CreateResponse(HttpStatusCode.OK);
             response.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             return response;

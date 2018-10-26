@@ -26,6 +26,8 @@ namespace Example
             services.AddSingleton<StarWarsData>();
             services.AddSingleton<StarWarsQuery>();
             services.AddSingleton<StarWarsMutation>();
+            services.AddSingleton<HumansQuery>();
+            services.AddSingleton<DroidsQuery>();
             services.AddSingleton<HumanType>();
             services.AddSingleton<HumanInputType>();
             services.AddSingleton<DroidType>();
