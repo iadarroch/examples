@@ -12,6 +12,8 @@ namespace StarWars
 
             Field<CharacterInterface>("hero", resolve: context => data.GetDroidByIdAsync("3"));
             Field<HumansQuery>("humans", resolve: context => new { });
+            Field<OkFluidHumansQuery>("okFluidHumans", resolve: context => new { });
+            Field<BadFluidHumansQuery>("badFluidHumans", resolve: context => new { });
             Field<DroidsQuery>("droids", resolve: context => new { });
         }
     }
@@ -28,6 +30,28 @@ namespace StarWars
                 resolve: context => data.GetHumanByIdAsync(context.GetArgument<string>("id"))
             );
 
+        }
+    }
+
+    public class OkFluidHumansQuery : ObjectGraphType<object>
+    {
+        public OkFluidHumansQuery(StarWarsData data)
+        {
+            Field<HumanType>()
+                .Name("human")
+                .Resolve(context => data.GetHumanByIdAsync("1")
+            );
+        }
+    }
+    public class BadFluidHumansQuery : ObjectGraphType<object>
+    {
+        public BadFluidHumansQuery(StarWarsData data)
+        {
+            Field<HumanType>()
+                .Name("human")
+                .Argument<NonNullGraphType<StringGraphType>>(Name = "thisIsTheArgId", Description = "id of the human")
+                .Resolve(context => data.GetHumanByIdAsync(context.GetArgument<string>("id"))
+                );
         }
     }
 
